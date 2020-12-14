@@ -12,11 +12,12 @@ const Stations = () => {
     };
     divy();
     }, [])
+    
     //////////////////////////////
     
     const renderList = locations.map((local, index) => {
         return (
-        <li className="list-group-item" key={local.location.latitude}>
+        <li className="list-group-item" key={local.id}>
             <div className="float-left">
             <h5>{local.station_name}</h5>
             <p>Latitude: {local.location.latitude}</p>

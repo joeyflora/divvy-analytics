@@ -1,3 +1,31 @@
 .App{
-    
+    .navigation{
+        
+    }
+}
+
+
+.station-marker-icon{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid #444444;
+
+}
+.station-marker-text{
+    display:none;
+}
+
+.station-marker-icon:hover + .station-marker-text{
+    display: block;
+    position: relative;
+    z-index: 1;
+    width:150px;
+    font-size: 48;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: #f3f0f0;
+    border: 1px solid black;
+    border-radius: 5%;
+    padding: 5px;
 }
