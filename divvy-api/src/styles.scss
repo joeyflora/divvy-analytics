@@ -1,9 +1,64 @@
-.App{
-    .navigation{
-        
+//imported fonts
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+$divy-blue: #3db7e4;
+$font: 'Roboto', sans-serif;
+
+.loading-container{
+    display: flex;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .spinner-border{
+        height:8rem;
+        width:8rem;
     }
 }
 
+.navigation{
+    padding:30px 15px;
+    display: flex;
+    align-items: center;
+    @media only screen and (max-width:600px){
+        flex-direction: column;
+    }
+    .nav-title{
+        color: $divy-blue;
+        margin-bottom:0px;
+        @media only screen and (max-width:600px){
+            text-align:center;
+        }
+    }
+    .nav-links{
+        @media only screen and (max-width:600px){
+            justify-content: center;
+            margin-top:20px;
+        }
+        align-items: center;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom:0px;
+        font-family: $font;
+        li{
+            color: $divy-blue;
+            border-radius: 25px;
+            list-style-type: none;
+            transition: .3s;
+            padding: 5px 15px;
+            margin:5px 5px;
+            font-size: 20px;
+            &:hover{
+                border-radius: 25px;
+                background-color: $divy-blue;
+                color: #fff;
+            }
+        }
+        a:hover{
+            text-decoration:none;
+        }
+    }
+}
 
 .station-marker-icon{
     height: 40px;
