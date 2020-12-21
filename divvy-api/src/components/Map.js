@@ -1,44 +1,32 @@
 import React, {useState, useEffect} from 'react';
 import StationMarker from "./StationMarker";
 import * as d3 from "d3";
-import divvy from "../apis/divvy"
+
 import apiKey from "../apis/googleMaps"
 import GoogleMapReact from 'google-map-react';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-const Map = () => {
+const Map = (props) => {
     const [isLoading, setIsLoading] = useState(true);
-    const [stations, setStations] = useState([]);
-    useEffect(() => {
-        // setIsLoading(true);
-        divvy.get('', 
-            {
-                params: {$limit: 100}
-            }).then(res => {
-                setStations(res.data);
-                setIsLoading(false);
-            })
-    }, []);
 
     const defaultMapProps = {
         //Chicago, IL
         center: {
-          lat: 41.87,
-          lng: -87.63
+          lat: 41.89,
+          lng: -87.64
         },
-        zoom:13
+        zoom:14
       };
 
-    const stationList = stations.map((station) =>{
+    const stationList = props.stations.map((station) =>{
         return(
-            <StationMarker key={station.id} lat={station.location.latitude} lng={station.location.longitude} name={station.station_name}/>
+            <StationMarker key={station.id} lat={station.location.latitude} lng={station.location.longitude} 
+                  name={station.station_name} station={station} handleStationSelection={props.handleStationSelection}/>
         )     
     })
 
     return (
         // Important! Always set the container height explicitly
-        <div style={{ height: '100vh', width: '100%' }}>
+        <div className="col-9 map"style={{ height: '80vh', width: '100%' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key:  'AIzaSyC48f-TjYTgS6YBThVyyuq2xX3JB9XFaQk'}}
             defaultCenter={defaultMapProps.center}
