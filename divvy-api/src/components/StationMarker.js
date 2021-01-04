@@ -1,9 +1,7 @@
-import react, { useState } from "react";
 
 const StationMarker = (props) =>{
-    const [text, setText] = useState(props.text);
     return(
-        <div className='station-marker'>
+        <div className='station-marker' onClick={() => props.handleStationSelection(props.station)}>
             
             <img className='station-marker-icon' src="../../divvy_logo.png"/>
             <div className="station-marker-text">{props.name}</div> 
