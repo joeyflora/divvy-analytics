@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react';
 // import divvyTrips from '../apis/divvyTrips'
-import Table from 'react-bootstrap/Table'
 import Loading from './Loading'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
@@ -20,11 +19,11 @@ const Trips = () => {
     const subscribeArray = []
     const gendersArray = []
     const timeArray = []
-    const ridesPerDay = []
+    const tripsCount = []
 
     function formatDate(date) {
         var dateObj = new Date(date);
-        var month = dateObj.getUTCMonth() +1; //months from 1-12
+        var month = dateObj.getUTCMonth() + 1; //months from 1-12
         var day = dateObj.getUTCDate() - 1;
         var year = dateObj.getUTCFullYear();
         return year + "-" + month + "-" + day;
@@ -39,15 +38,15 @@ const Trips = () => {
             return (val === elem ? acc + 1 : acc)
         }, 0)
     }
+    
     useEffect(() => {
         var startDay = formatDate(startDate)
         var endDay = formatDate(endDate)
-        console.log(startDay, endDay)
         var url = `https://data.cityofchicago.org/resource/fg6s-gzvg.json?$where=start_time%20between%20%27${startDay}%27%20and%20%27${endDay}%27`
         const divyTrips = async () => {
             const response = await axios.get(url, {
                 params: {
-                    $limit: 40000
+                    $limit: 100000
                 }
             })
             setTrips(response.data)
@@ -70,6 +69,29 @@ const Trips = () => {
         }
         var total = cost.toFixed(0);
     })
+    
+    ///////////// count rides ber day ////////////////////
+    timeArray.forEach(function (elem) {
+        var date = elem.time.split(' ')[0];
+    
+        if (tripsCount[date]) {
+            tripsCount[date] += 1;
+        } else {
+            tripsCount[date] = 1;
+        }
+    });
+    ////////////////////////////////////////////////////
+
+    ///////////// Data for lineChart//////////////
+    const datee = []
+    const valuee = []
+    for(const [key, value] of Object.entries(tripsCount)) {
+        datee.push(key)
+        valuee.push(value)
+    }
+    //////////////////////////////////////////////
+
+    
     //add array costs
     const arrayz = costsArray.reduce((a, b) => a + b, 0)
     const arraySubscribe = countOccurences(subscribeArray, 'Subscriber')
@@ -77,7 +99,6 @@ const Trips = () => {
     const countMale = countOccurences(gendersArray, 'Male');
     const countFemale = countOccurences(gendersArray, 'Female');
     const countNA = countOccurences(gendersArray, 'N/A')
-    console.log(timeArray)
     var totalMade = parseInt(arrayz)
 
 
@@ -118,6 +139,14 @@ const Trips = () => {
                                 maxSet={1000} 
                                 chartTitle='Gender' 
                                 dataLabel='Gender'
+                        />
+                    </div>
+                    <div className="col-md-6">
+                        <LineChart dataSet={valuee} 
+                                labels={datee} 
+                                maxSet={1000} 
+                                chartTitle='Trips from Start Date to End' 
+                                dataLabel='Trips'
                         />
                     </div>
                 </div>
