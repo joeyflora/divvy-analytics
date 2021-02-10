@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import divvy from '../apis/divvy'
+import Loading from './Loading'
 
 const Stations = () => {
     const [locations, setLocations] = useState([])
+    const [loading, setLoading] = useState(true)
     
   // Get locations on load of app
     useEffect(() => {
     const divy = async () => {
         const response = await divvy.get()
         setLocations(response.data)
+        setLoading(false);
     };
     divy();
     }, [])
@@ -29,7 +32,15 @@ const Stations = () => {
     })
 
     return (
-        <ul className="list-group">{renderList}</ul>
+        <>
+        {loading ?
+                <Loading />
+                : 
+        <div className="stations-container">
+            <ul className="list-group">{renderList}</ul>
+        </div>
+        }
+        </>
     )
 }
 
