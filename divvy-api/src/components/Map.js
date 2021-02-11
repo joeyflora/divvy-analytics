@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import StationMarker from "./StationMarker";
-import * as d3 from "d3";
 
 import apiKey from "../apis/googleMaps"
 import GoogleMapReact from 'google-map-react';
@@ -17,7 +16,7 @@ const Map = (props) => {
         zoom:14
       };
 
-    const stationList = props.stations.map((station) =>{
+    const stationList = !props.stations ? [] : props.stations.map((station) =>{
         return(
             <StationMarker key={station.id} lat={station.location.latitude} lng={station.location.longitude} 
                   name={station.station_name} station={station} handleStationSelection={props.handleStationSelection}/>

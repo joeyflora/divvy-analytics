@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import {connect} from "react-redux";
 
 const StationInfo = (props) =>{
     return(
@@ -14,4 +15,6 @@ const StationInfo = (props) =>{
     );
 }
 
-export default StationInfo;
+const mapStateToProps = (globalState) =>({selectedStation: globalState.selectedStation});
+
+export default connect(mapStateToProps, {})(StationInfo);
