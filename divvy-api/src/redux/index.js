@@ -1,5 +1,4 @@
 import redux, {createStore, applyMiddleware} from "redux"
-import thunk from "redux-thunk"
 import divvy from "../apis/divvy"
 /*Action reducer using redux-thunk to move axios api call into reducer*/
 // export function fetchStations() {
