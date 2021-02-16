@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Map from'./Map'
 import StationInfoPane from './StationInfoPane'
 import divvy from "../apis/divvy"
-import store, {fetchStations, setStations,setSelectedStation} from "../redux"
+import store, { setStations,setSelectedStation} from "../redux"
 
 
 const MapContainer = () =>{

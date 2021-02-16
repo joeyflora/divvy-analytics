@@ -5,26 +5,36 @@ import BarChart from './BarChart'
 import LineChart from './LineChart'
 import axios from 'axios'
 
+//////////////redux imports ///////////////////////////////////
+import { useSelector, useDispatch } from "react-redux";
+import store, { getTrips, setStartDateRedux, setEndDateRedux } from "../redux"
+
 //////////////react date picker imports//////////////////////
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 /////////////////////////////////////////////////////////////
 
 const Trips = () => {
-    const [trips, setTrips] = useState([])
+    // get info from store and state
+    const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(true)
-    const [startDate, setStartDate] = useState(new Date("2019-12-20"))
-    const [endDate, setEndDate] = useState(new Date("2019-12-21"))
+    const startDateRedux1 = useSelector(state => state.startDate)
+    const endDateRedux1 = useSelector(state => state.endDate)
+    const allTrips = useSelector(state => state.trips)
+
+    // initialize arrays
     const costsArray = []
     const subscribeArray = []
     const gendersArray = []
     const timeArray = []
     const tripsCount = []
 
+///////////////////////// operation functions //////////////////////////
+
     function formatDate(date) {
         var dateObj = new Date(date);
         var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate() - 1;
+        var day = dateObj.getUTCDate();
         var year = dateObj.getUTCFullYear();
         return year + "-" + month + "-" + day;
     }
@@ -38,10 +48,11 @@ const Trips = () => {
             return (val === elem ? acc + 1 : acc)
         }, 0)
     }
-    
+
+///////////////// api call for trips info /////////////////////////////////
     useEffect(() => {
-        var startDay = formatDate(startDate)
-        var endDay = formatDate(endDate)
+        var startDay = formatDate(startDateRedux1)
+        var endDay = formatDate(endDateRedux1)
         var url = `https://data.cityofchicago.org/resource/fg6s-gzvg.json?$where=start_time%20between%20%27${startDay}%27%20and%20%27${endDay}%27`
         const divyTrips = async () => {
             const response = await axios.get(url, {
@@ -49,14 +60,16 @@ const Trips = () => {
                     $limit: 100000
                 }
             })
-            setTrips(response.data)
+            store.dispatch(getTrips(response.data));
         };
         divyTrips();
 
         setIsLoading(false)
-        }, [startDate, endDate])
+        }, [startDateRedux1, endDateRedux1])
 
-    const renderList = trips.map( trip => {
+
+///////////// get trips from store using selector and perform needed operations /////////////
+    allTrips.map(trip => {
         var cost = trip.trip_duration / 30 * 3;
         costsArray.push(cost);
         subscribeArray.push(trip.user_type);
@@ -67,10 +80,10 @@ const Trips = () => {
         }else{
             gendersArray.push(trip.gender);
         }
-        var total = cost.toFixed(0);
+        return null
     })
-    
-    ///////////// count rides ber day ////////////////////
+
+///////////// count rides ber day ////////////////////
     timeArray.forEach(function (elem) {
         var date = elem.time.split(' ')[0];
     
@@ -80,19 +93,18 @@ const Trips = () => {
             tripsCount[date] = 1;
         }
     });
-    ////////////////////////////////////////////////////
 
-    ///////////// Data for lineChart//////////////
+///////////// Split tripsCount for lineChart data //////////////
     const datee = []
     const valuee = []
     for(const [key, value] of Object.entries(tripsCount)) {
-        datee.push(key)
+        var d = new Date(key);
+        let f = d.setDate(d.getDate());
+        datee.push(formatDate(f))
         valuee.push(value)
     }
-    //////////////////////////////////////////////
-
     
-    //add array costs
+/////////////////// count occurences in all arrays for charts //////////////////
     const arrayz = costsArray.reduce((a, b) => a + b, 0)
     const arraySubscribe = countOccurences(subscribeArray, 'Subscriber')
     const arrayNotSubscribe = countOccurences(subscribeArray, 'Customer')
@@ -101,7 +113,7 @@ const Trips = () => {
     const countNA = countOccurences(gendersArray, 'N/A')
     var totalMade = parseInt(arrayz)
 
-
+/////////////// jsx return //////////////////
     return (
         <div style={{padding: '0 15px'}}>
             <h1>Trips</h1>
@@ -111,14 +123,14 @@ const Trips = () => {
             <div className="container md-30">
                 <div className="d-flex justify-content-around">
                     <div>
-                        Start Date: <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                        Start Date: <DatePicker selected={startDateRedux1} onChange={date => dispatch(setStartDateRedux(date))} />
                     </div>
                     <div>
-                        End Date: <DatePicker selected={endDate} onChange={date => setEndDate(date)} />
+                        End Date: <DatePicker selected={endDateRedux1} onChange={date => dispatch(setEndDateRedux(date))} />
                     </div>
                 </div>
                 <div className="container text-center" style={{margin:'35px 0px'}}>
-                    <h3>Selected Date: {startDate.toLocaleString().slice(0,10)}</h3>
+                    <h3>Selected Date: {startDateRedux1.toLocaleString().slice(0,10)}</h3>
                 </div>
                 <div className="row"> 
                     <div className="col-md-6 d-flex justify-content-center align-items-center flex-column">
