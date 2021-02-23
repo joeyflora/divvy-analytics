@@ -6,7 +6,6 @@ import axios from 'axios';
 //////////////react date picker imports//////////////////////
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import MapFilters from './MapFilters';
 /////////////////////////////////////////////////////////////
 
 const StationInfo = (props) =>{
