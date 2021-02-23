@@ -18,7 +18,7 @@ $font: 'Roboto', sans-serif;
 
 /*====== Navigation Styles ======*/
 .navigation{
-    padding:30px 15px;
+    padding:20px 15px;
     display: flex;
     align-items: center;
     @media only screen and (max-width:600px){
@@ -192,14 +192,11 @@ $font: 'Roboto', sans-serif;
     border-radius: 5%;
     padding: 5px;
 }
-
-.station-info-pane{
-    background-color: rgb(222, 224, 228);
-    border: 1px solid black;
-}
-
 .map-container{
-    padding: 5px 20px 20px 20px;
+    position: absolute;
+    top:150px;   
+    border-top: 1px solid #444444;
+}
 .react-datepicker__input-container{
     input[type="text"]{
         border-radius: 50px;
@@ -209,4 +206,65 @@ $font: 'Roboto', sans-serif;
         border-radius: 50px;
     }
 }
+.map-utility-bar{
+    border-top: 1px solid #444444;
+    padding-top: 10px;
+    
+    
+}
+.search-bar{
+    padding-left: 15px;
+    padding-bottom: 10px;
+    
+}
+.search-results{
+    width:100%;
+    height: 300px;
+    position: relative;
+    z-index: 1; 
+    overflow: auto;
+    padding-left: 138px;
+}
+.search-result{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+    background: $divy-blue;
+    list-style-type: none;
+    font-size: 18px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.search-result:hover{
+    background: #f3f0f0;
+    color :$divy-blue;
+}
+.station-info-pane{
+    .h3{
+        text-align: center;
+    }
+    text-align:left;
+    box-shadow: -2px 2px 5px 0 #aaaaaa;
+    font-size: 22px;
+    padding-left: 10px;
+}
+.search-input{
+    width:75%;
+}
+.date-picker{
+    height: 20px;
+    width: 150px;
+    font-size: 16px;
+    border: 0.5px solid #aaaaaa;
+}
+.no-gutters-9 {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-9"] {
+      padding-right: 0;
+      padding-left: 0;
+    }
 }

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import StationMarker from "./StationMarker";
-
+import {connect} from "react-redux";
 import apiKey from "../apis/googleMaps"
 import GoogleMapReact from 'google-map-react';
+import { render } from 'react-dom';
 
 const Map = (props) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -22,13 +23,12 @@ const Map = (props) => {
                   name={station.station_name} station={station} handleStationSelection={props.handleStationSelection}/>
         )     
     })
-
     return (
         // Important! Always set the container height explicitly
         <div className="col-9 map"style={{ height: '80vh', width: '100%' }}>
           <GoogleMapReact
             bootstrapURLKeys={{ key:  'AIzaSyC48f-TjYTgS6YBThVyyuq2xX3JB9XFaQk'}}
-            defaultCenter={defaultMapProps.center}
+            center={props.selectedStation ? props.selectedStation.stationLocation.coordinates : defaultMapProps.center}
             defaultZoom={defaultMapProps.zoom}
           >
             {stationList}
@@ -38,5 +38,6 @@ const Map = (props) => {
 
 }
 
+const mapStateToProps = (globalState) =>({selectedStation: globalState.selectedStation},{stations:globalState.stations});
 
-export default Map
+export default connect(mapStateToProps, {})(Map);

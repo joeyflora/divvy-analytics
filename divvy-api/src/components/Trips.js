@@ -4,6 +4,7 @@ import Loading from './Loading'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import axios from 'axios'
+import {formatDate} from "../utilities"
 
 //////////////redux imports ///////////////////////////////////
 import { useSelector, useDispatch } from "react-redux";
@@ -31,13 +32,13 @@ const Trips = () => {
 
 ///////////////////////// operation functions //////////////////////////
 
-    function formatDate(date) {
-        var dateObj = new Date(date);
-        var month = dateObj.getUTCMonth() + 1; //months from 1-12
-        var day = dateObj.getUTCDate();
-        var year = dateObj.getUTCFullYear();
-        return year + "-" + month + "-" + day;
-    }
+    // function formatDate(date) {
+    //     var dateObj = new Date(date);
+    //     var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    //     var day = dateObj.getUTCDate();
+    //     var year = dateObj.getUTCFullYear();
+    //     return year + "-" + month + "-" + day;
+    // }
 
     function currency(num) {
         return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num)
