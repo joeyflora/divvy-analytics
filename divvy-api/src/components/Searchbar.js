@@ -41,10 +41,4 @@ const Searchbar = (props) =>{
 }
 
 const mapStateToProps = (globalState) =>({selectedStation: globalState.selectedStation},{stations:globalState.stations});
-// const mapDispatchToProps = dispatch => {
-//     return {
-//       // dispatching actions returned by action creators
-//       setSelectedStation: () => dispatch(setSelectedStation())
-//     }
-//   }
 export default connect(mapStateToProps, {})(Searchbar);

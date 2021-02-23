@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import Map from'./Map'
 import StationInfoPane from './StationInfoPane'
+import Searchbar from './Searchbar'
 import divvy from "../apis/divvy"
 import store, { setStations,setSelectedStation} from "../redux"
+import MapFilters from './MapFilters'
 
 
 const MapContainer = () =>{
@@ -28,10 +30,17 @@ const MapContainer = () =>{
         // setSelectedStation(station);
     }
     return(
-        <div className="container map-container">
-            <div className="row">
-                <Map handleStationSelection={handleStationSelection} stations={store.getState().stations} />
-                <StationInfoPane selectedStation = {store.getState().selectedStation}/>
+        <div>
+            <div class="row map-utility-bar">
+                <div className="col-5">                    
+                    <Searchbar/>                
+                </div> 
+            </div>
+            <div className="container-fluid p-0 map-container">
+                <div className="row no-gutters-9">                
+                    <Map handleStationSelection={handleStationSelection} stations={store.getState().stations} />
+                    <StationInfoPane selectedStation = {store.getState().selectedStation}/>                
+                </div>
             </div>
         </div>
     )

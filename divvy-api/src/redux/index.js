@@ -1,21 +1,4 @@
 import {createStore} from "redux"
-// import divvy from "../apis/divvy"
-/*Action reducer using redux-thunk to move axios api call into reducer*/
-// export function fetchStations() {
-//     return (dispatch) => {        
-//         divvy.get('', 
-//         {
-//             params: {$limit: 400}
-//         }).then(res => res.json()
-//         .then(res => {
-//                 console.log(res)
-//                 dispatch({
-//                     type: "FETCH_STATIONS",
-//                     payload: res
-//                 })
-//             })
-//         )};
-// }
 
 //Initialize State
 
@@ -62,6 +45,19 @@ export function setEndDateRedux(endDate){
         chosenEndDate: endDate
     }
 }
+export function setSelectedStationInboundTrips(trips){
+    return{
+        type: "SET_SELECTED_STATION_INBOUND_TRIPS",
+        incomingTrips: trips
+    }
+}
+export function setSelectedStationOutboundTrips(trips){
+    return{
+        type: "SET_SELECTED_STATION_OUTBOUND_TRIPS",
+        outgoingTrips: trips
+    }
+}
+
 
 //REDUCERS STATIONS
 function reducer(state=initState, action) {
@@ -87,11 +83,19 @@ function reducer(state=initState, action) {
             return{...state,
             endDate: action.chosenEndDate
         }
+        case "SET_SELECTED_STATION_INBOUND_TRIPS":
+            return{...state,
+                inboundTrips: action.incomingTrips
+            }
+        case "SET_SELECTED_STATION_OUTBOUND_TRIPS":
+            return{...state,
+                outboundTrips: action.outgoingTrips
+            }    
         default:
             return state
     }
 }
 
-const store = createStore(reducer) //Add applyMiddleWare(thunk) to use redux-thunk
+const store = createStore(reducer)
 store.subscribe(() => console.log(store.getState()))
 export default store
