@@ -16,12 +16,14 @@ $font: 'Roboto', sans-serif;
     }
 }
 
+/*====== Navigation Styles ======*/
 .navigation{
     padding:20px 15px;
     display: flex;
     align-items: center;
     @media only screen and (max-width:600px){
         flex-direction: column;
+        padding-bottom:0px;
     }
     .nav-title{
         color: $divy-blue;
@@ -59,6 +61,112 @@ $font: 'Roboto', sans-serif;
         }
     }
 }
+
+/*====== Hero Section Styles ======*/
+.overlay{
+    clip-path: polygon(0 0, 100% 0%, 100% 80%, 0 100%);
+    position:relative;
+    @media only screen and(max-width:450px){
+        clip-path: polygon(0 0, 100% 0%, 100% 90%, 0 100%);
+    }
+    .home-hero-section{
+        background-color: $divy-blue;
+        clip-path: polygon(0 0, 100% 0%, 100% 84%, 0 100%);
+        color: #fff;
+        @media only screen and(max-width:450px){
+            clip-path: polygon(0 0, 100% 0%, 100% 90%, 0 100%);
+        }
+        &:after{
+            content: "";
+            background: url('./styleImages/bike-unsplash.jpg');
+            background-position: center;
+            background-size: cover;
+            opacity: 0.3;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;   
+        }
+        .home-hero-container{
+            position: relative;
+            z-index: 22;
+            text-align: center;  
+            height: 68vh; 
+            display: flex;  
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom:50px;
+
+        }
+        .text-container{
+            position:absolute;
+            text-align:center;
+            font-family: $font;
+            width:80%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            h1{
+                font-size:9vw;
+                @media only screen and (max-width:500px){
+                    font-size:21vw;
+                }
+            }
+            p{
+                margin: 30px 0px;
+                font-size:2.0vw;
+                font-style: italic;
+                @media only screen and (max-width:500px){
+                    font-size:5vw;
+                    margin-top:10px;
+                }
+            }
+        }
+    }
+}
+.home-row{
+    justify-content: center !important;
+    .tiltFormat{
+        justify-content: center !important;
+    }
+    .cards{
+        margin: 20px;
+        @media only screen and (max-width: 450px){
+            margin:35px;
+        }
+        &:hover{
+            img{
+                transform: scale(0.92);
+            }
+        }
+        img{
+            transition: .5s;
+            z-index:1;
+        }
+        .cardButton{
+            width:100%;
+            background-color: $divy-blue;
+            color: #fff;
+            border:none;
+            height:45px;
+            &:focus{
+                opacity: .8;
+                background-color:$divy-blue;
+                color: #fff;
+                border:none !important;
+            }
+            &:active{
+                background-color:$divy-blue !important;
+                color:#fff;
+                opacity: .8;
+                border: none;
+            }
+        }
+    }
+}
+
 
 .station-marker-icon{
     height: 40px;
