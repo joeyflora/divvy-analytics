@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Map from'./Map'
 import StationInfoPane from './StationInfoPane'
 import Searchbar from './Searchbar'
+import MapFilters from './MapFilters'
 import divvy from "../apis/divvy"
 import store, { setStations,setSelectedStation} from "../redux"
 
