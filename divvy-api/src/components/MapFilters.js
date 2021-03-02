@@ -1,10 +1,14 @@
-import react from "react";
+import react, { useState } from "react";
+import {connect} from "react-redux";
+import store, { setFilteredStations, setStationDockFilter} from "../redux";
 
-const handleDockFilter = (n) =>{
-    
-}
 
-const MapFilters = () =>{
+
+const MapFilters = (props) =>{
+    function handleDockFilter(value){
+        // value.preventDefault();
+        store.dispatch(setFilteredStations(props.stations, value));
+    }
     return(
         // <div className="dropdown">
         //     <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,8 +31,13 @@ const MapFilters = () =>{
         //         <a className="dropdown-item" href="#">Forgot password?</a>
         //     </div>
         // </div>
-        <input type="number" ></input>
+        <>
+            <label>Filter by Dock Size </label>
+            <input id="dock-filter-min" type="number"></input>
+            <button onClick={()=>handleDockFilter(document.getElementById("dock-filter-min").value)}>Apply Filter</button>
+        </>
+        
     )
 }
-
-export default MapFilters;
+const mapStateToProps = (globalState) =>({stations:globalState.stations, stationDockFilter:globalState.stationDockFilter});
+export default connect(mapStateToProps, {})(MapFilters);

@@ -4,6 +4,8 @@ import {createStore} from "redux"
 
 const initState = {
     stations:[],
+    filteredStations:[],
+    stationDockFilter:0,
     selectedStation:"",
     trips:[],
     startDate: new Date("2019-12-20"),
@@ -25,6 +27,20 @@ export function setSelectedStation(station){
     }
 }
 
+export function setFilteredStations(stations, minDocks){
+    var filteredStations = stations.filter(station=>station.total_docks>parseInt(minDocks));
+    return {
+        type: "SET_FILTERED_STATIONS", 
+        stations: filteredStations
+    };
+}
+
+export function setStationDockFilter(minDocks){ 
+    return {
+        type: "SET_STATION_DOCK_FILTER", 
+        dockFilter: minDocks
+    };
+}
 //Actions Trips
 export function getTrips(tripsData){
     return{
@@ -67,7 +83,13 @@ function reducer(state=initState, action) {
                 stations : action.payload.res}
         case "SET_STATIONS":
             return {...state,
-                stations : action.payload}       
+                stations : action.payload}
+        case "SET_FILTERED_STATIONS":
+            return {...state,
+                filteredStations : action.stations}
+        case "SET_STATION_DOCK_FILTER":
+            return {...state,
+                stationDockFilter : action.dockFilter}         
         case "SET_SELECTED_STATION":
             return {...state,
             selectedStation : action.selectedStation}
@@ -96,6 +118,5 @@ function reducer(state=initState, action) {
     }
 }
 
-const store = createStore(reducer)
-store.subscribe(() => console.log(store.getState()))
+const store = createStore(reducer);
 export default store
